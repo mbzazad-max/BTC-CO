@@ -1,0 +1,448 @@
+{
+ "generated": "2026-11-15 23:18 UTC",
+ "checked_at": 1794784737,
+ "input_hash": "8699a7b3566c0e0abf7fb8d715b42d81b3d8aa642bde9866f09cb2c20b293427",
+ "series": [
+  {
+   "id": "binance/AAVEUSDT/1D",
+   "source": "binance",
+   "symbol": "AAVEUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": 1794614400,
+   "last_close": 1794700800,
+   "fetched_at": 1794701851,
+   "rows": 2222,
+   "frozen": false
+  },
+  {
+   "id": "binance/ADAUSDT/1D",
+   "source": "binance",
+   "symbol": "ADAUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": 1794614400,
+   "last_close": 1794700800,
+   "fetched_at": 1794701831,
+   "rows": 3134,
+   "frozen": false
+  },
+  {
+   "id": "binance/ARBUSDT/1D",
+   "source": "binance",
+   "symbol": "ARBUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": null,
+   "last_close": null,
+   "fetched_at": null,
+   "rows": 0,
+   "frozen": false
+  },
+  {
+   "id": "binance/ASTERUSDT/1D",
+   "source": "binance",
+   "symbol": "ASTERUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": 1794614400,
+   "last_close": 1794700800,
+   "fetched_at": 1794701874,
+   "rows": 405,
+   "frozen": false
+  },
+  {
+   "id": "binance/AVAXUSDT/1D",
+   "source": "binance",
+   "symbol": "AVAXUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": null,
+   "last_close": null,
+   "fetched_at": null,
+   "rows": 0,
+   "frozen": false
+  },
+  {
+   "id": "binance/BNBUSDT/1D",
+   "source": "binance",
+   "symbol": "BNBUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": 1794614400,
+   "last_close": 1794700800,
+   "fetched_at": 1794701827,
+   "rows": 3296,
+   "frozen": false
+  },
+  {
+   "id": "binance/BTCUSDT/1D",
+   "source": "binance",
+   "symbol": "BTCUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": 1794614400,
+   "last_close": 1794700800,
+   "fetched_at": 1794701817,
+   "rows": 3377,
+   "frozen": false
+  },
+  {
+   "id": "binance/DOGEUSDT/1D",
+   "source": "binance",
+   "symbol": "DOGEUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": 1794614400,
+   "last_close": 1794700800,
+   "fetched_at": 1794701834,
+   "rows": 2690,
+   "frozen": false
+  },
+  {
+   "id": "binance/ENAUSDT/1D",
+   "source": "binance",
+   "symbol": "ENAUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": 1794614400,
+   "last_close": 1794700800,
+   "fetched_at": 1794701853,
+   "rows": 957,
+   "frozen": false
+  },
+  {
+   "id": "binance/ETHUSDT/1D",
+   "source": "binance",
+   "symbol": "ETHUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": 1794614400,
+   "last_close": 1794700800,
+   "fetched_at": 1794701821,
+   "rows": 3377,
+   "frozen": false
+  },
+  {
+   "id": "binance/FETUSDT/1D",
+   "source": "binance",
+   "symbol": "FETUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": null,
+   "last_close": null,
+   "fetched_at": null,
+   "rows": 0,
+   "frozen": false
+  },
+  {
+   "id": "binance/GRAMUSDT/1D",
+   "source": "binance",
+   "symbol": "GRAMUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": 1794614400,
+   "last_close": 1794700800,
+   "fetched_at": 1794701875,
+   "rows": 136,
+   "frozen": false
+  },
+  {
+   "id": "binance/HYPEUSDT/1D",
+   "source": "binance",
+   "symbol": "HYPEUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": 1794614400,
+   "last_close": 1794700800,
+   "fetched_at": 1794701875,
+   "rows": 52,
+   "frozen": false
+  },
+  {
+   "id": "binance/ICPUSDT/1D",
+   "source": "binance",
+   "symbol": "ICPUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": 1794614400,
+   "last_close": 1794700800,
+   "fetched_at": 1794701849,
+   "rows": 2014,
+   "frozen": false
+  },
+  {
+   "id": "binance/JUPUSDT/1D",
+   "source": "binance",
+   "symbol": "JUPUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": 1794614400,
+   "last_close": 1794700800,
+   "fetched_at": 1794701863,
+   "rows": 1019,
+   "frozen": false
+  },
+  {
+   "id": "binance/LDOUSDT/1D",
+   "source": "binance",
+   "symbol": "LDOUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": 1794614400,
+   "last_close": 1794700800,
+   "fetched_at": 1794701869,
+   "rows": 1651,
+   "frozen": false
+  },
+  {
+   "id": "binance/LINKUSDT/1D",
+   "source": "binance",
+   "symbol": "LINKUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": 1794614400,
+   "last_close": 1794700800,
+   "fetched_at": 1794701837,
+   "rows": 2860,
+   "frozen": false
+  },
+  {
+   "id": "binance/LTCUSDT/1D",
+   "source": "binance",
+   "symbol": "LTCUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": 1794614400,
+   "last_close": 1794700800,
+   "fetched_at": 1794701839,
+   "rows": 3259,
+   "frozen": false
+  },
+  {
+   "id": "binance/NEARUSDT/1D",
+   "source": "binance",
+   "symbol": "NEARUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": 1794614400,
+   "last_close": 1794700800,
+   "fetched_at": 1794701847,
+   "rows": 2223,
+   "frozen": false
+  },
+  {
+   "id": "binance/ONDOUSDT/1D",
+   "source": "binance",
+   "symbol": "ONDOUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": 1794614400,
+   "last_close": 1794700800,
+   "fetched_at": 1794701862,
+   "rows": 583,
+   "frozen": false
+  },
+  {
+   "id": "binance/PEPEUSDT/1D",
+   "source": "binance",
+   "symbol": "PEPEUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": 1794614400,
+   "last_close": 1794700800,
+   "fetched_at": 1794701865,
+   "rows": 1290,
+   "frozen": false
+  },
+  {
+   "id": "binance/RAYUSDT/1D",
+   "source": "binance",
+   "symbol": "RAYUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": null,
+   "last_close": null,
+   "fetched_at": null,
+   "rows": 0,
+   "frozen": false
+  },
+  {
+   "id": "binance/RENDERUSDT/1D",
+   "source": "binance",
+   "symbol": "RENDERUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": null,
+   "last_close": null,
+   "fetched_at": null,
+   "rows": 0,
+   "frozen": false
+  },
+  {
+   "id": "binance/SOLUSDT/1D",
+   "source": "binance",
+   "symbol": "SOLUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": 1794614400,
+   "last_close": 1794700800,
+   "fetched_at": 1794701824,
+   "rows": 2287,
+   "frozen": false
+  },
+  {
+   "id": "binance/SUIUSDT/1D",
+   "source": "binance",
+   "symbol": "SUIUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": 1794614400,
+   "last_close": 1794700800,
+   "fetched_at": 1794701846,
+   "rows": 1292,
+   "frozen": false
+  },
+  {
+   "id": "binance/TAOUSDT/1D",
+   "source": "binance",
+   "symbol": "TAOUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": 1794614400,
+   "last_close": 1794700800,
+   "fetched_at": 1794701855,
+   "rows": 948,
+   "frozen": false
+  },
+  {
+   "id": "binance/WIFUSDT/1D",
+   "source": "binance",
+   "symbol": "WIFUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": null,
+   "last_close": null,
+   "fetched_at": null,
+   "rows": 0,
+   "frozen": false
+  },
+  {
+   "id": "binance/XLMUSDT/1D",
+   "source": "binance",
+   "symbol": "XLMUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": 1794614400,
+   "last_close": 1794700800,
+   "fetched_at": 1794701841,
+   "rows": 3090,
+   "frozen": false
+  },
+  {
+   "id": "binance/XRPUSDT/1D",
+   "source": "binance",
+   "symbol": "XRPUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": 1794614400,
+   "last_close": 1794700800,
+   "fetched_at": 1794701829,
+   "rows": 3117,
+   "frozen": false
+  },
+  {
+   "id": "binance/ZECUSDT/1D",
+   "source": "binance",
+   "symbol": "ZECUSDT",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": 1794614400,
+   "last_close": 1794700800,
+   "fetched_at": 1794701873,
+   "rows": 2796,
+   "frozen": false
+  },
+  {
+   "id": "tv/CRYPTOCAP_USDC.D/1D",
+   "source": "tv",
+   "symbol": "USDC.D",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": 1794441600,
+   "last_close": 1794528000,
+   "fetched_at": 1794566427,
+   "rows": 2884,
+   "frozen": true
+  },
+  {
+   "id": "tv/CRYPTOCAP_USDC.D/4H",
+   "source": "tv",
+   "symbol": "USDC.D",
+   "tf": "4H",
+   "period_s": 14400,
+   "last_open": 1794715200,
+   "last_close": 1794729600,
+   "fetched_at": 1794731387,
+   "rows": 1910,
+   "frozen": false
+  },
+  {
+   "id": "tv/CRYPTOCAP_USDT.D/1D",
+   "source": "tv",
+   "symbol": "USDT.D",
+   "tf": "1D",
+   "period_s": 86400,
+   "last_open": 1794441600,
+   "last_close": 1794528000,
+   "fetched_at": 1794566427,
+   "rows": 4268,
+   "frozen": true
+  },
+  {
+   "id": "tv/CRYPTOCAP_USDT.D/4H",
+   "source": "tv",
+   "symbol": "USDT.D",
+   "tf": "4H",
+   "period_s": 14400,
+   "last_open": 1794715200,
+   "last_close": 1794729600,
+   "fetched_at": 1794731387,
+   "rows": 1910,
+   "frozen": false
+  }
+ ],
+ "readings": [],
+ "kept": [
+  {
+   "id": "BINANCE:AVAXUSDT",
+   "why": "no candles in Market-Data yet"
+  },
+  {
+   "id": "BINANCE:RENDERUSDT",
+   "why": "no candles in Market-Data yet"
+  },
+  {
+   "id": "BINANCE:ARBUSDT",
+   "why": "no candles in Market-Data yet"
+  },
+  {
+   "id": "BINANCE:FETUSDT",
+   "why": "no candles in Market-Data yet"
+  },
+  {
+   "id": "BINANCE:RAYUSDT",
+   "why": "no candles in Market-Data yet"
+  },
+  {
+   "id": "BINANCE:WIFUSDT",
+   "why": "no candles in Market-Data yet"
+  }
+ ],
+ "dropped": [
+  "BYBIT:VVVUSDT",
+  "CRYPTOCAP:STABLE.C.D"
+ ],
+ "page_calls": 34,
+ "last_result": "26 updated. 8 did not load (AVAX, RENDER, ARB, FET, RAY, VVV, WIF, STABLE.C.D); they keep their previous result. Press Fetch missing coins to retry them."
+}

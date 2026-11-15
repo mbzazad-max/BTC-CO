@@ -1,0 +1,480 @@
+<title>BTC Correlations</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: status bar with saved-scan time and Refresh on top, your BTC price controls, stablecoin dominance, coin cards, the full table, then the reading guide. Same visual family as Breakout Radar. */
+:root{
+  --bg:#f3f5f8; --panel:#ffffff; --ink:#12202c; --muted:#586878; --line:#dce2e9; --soft:#eaeef3;
+  --up:#0d8a5c; --up-bg:#e3f4ec; --dn:#c0410f; --dn-bg:#fbe9df; --acc:#2557d6; --acc-bg:#e4ebfb;
+  --warn:#9a6700; --warn-bg:#fff3cd;
+  --sans:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif; --mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0e141a; --panel:#151d25; --ink:#e5ecf3; --muted:#92a3b4; --line:#26323d; --soft:#1c2630;
+  --up:#41d09a; --up-bg:#0f2d24; --dn:#ff9265; --dn-bg:#33211a; --acc:#7ba5ff; --acc-bg:#182643;
+  --warn:#f2c14e; --warn-bg:#33290f; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e141a; --panel:#151d25; --ink:#e5ecf3; --muted:#92a3b4; --line:#26323d; --soft:#1c2630;
+  --up:#41d09a; --up-bg:#0f2d24; --dn:#ff9265; --dn-bg:#33211a; --acc:#7ba5ff; --acc-bg:#182643;
+  --warn:#f2c14e; --warn-bg:#33290f; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px 40px}
+.wrap{max-width:1240px;margin:0 auto;display:grid;gap:14px}
+h1{font-size:22px;font-weight:600;margin:0;letter-spacing:-.01em}
+h2{font-size:16px;font-weight:600;margin:0;text-wrap:balance}
+h3{font-size:12px;font-weight:600;margin:0;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+p{margin:0}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.note{color:var(--muted);font-size:12.5px;line-height:1.45}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:10px;min-width:0}
+.top{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:space-between}
+.status{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.pill{display:inline-block;padding:1px 9px;border-radius:999px;font-size:12px;font-weight:500;background:var(--soft);color:var(--muted);white-space:nowrap}
+.pill.up{background:var(--up-bg);color:var(--up)} .pill.dn{background:var(--dn-bg);color:var(--dn)} .pill.warn{background:var(--warn-bg);color:var(--warn)} .pill.acc{background:var(--acc-bg);color:var(--acc)}
+.btn{font:inherit;font-weight:500;padding:6px 16px;border-radius:999px;border:1px solid var(--acc);background:var(--acc);color:#fff;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--acc)}
+.btn:disabled{opacity:.5;cursor:default}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.prog{height:4px;border-radius:2px;background:var(--soft);overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--acc);transition:width .4s}
+.banner{border-radius:8px;padding:8px 12px;font-size:13px;background:var(--warn-bg);color:var(--warn)}
+.banner.ok{background:var(--up-bg);color:var(--up)} .banner.bad{background:var(--dn-bg);color:var(--dn)}
+.lede{color:var(--muted);line-height:1.55;max-width:75ch}
+.lede b{color:var(--ink);font-weight:600}
+.controls{display:flex;flex-wrap:wrap;gap:14px 28px;align-items:flex-end}
+.field{display:grid;gap:4px}
+.field label{font-size:12px;color:var(--muted)}
+.inwrap{display:flex;align-items:center;gap:4px;border:1px solid var(--line);border-radius:8px;padding:4px 10px;background:var(--bg)}
+.inwrap span{font-family:var(--mono);font-size:20px;color:var(--muted)}
+#target{font-family:var(--mono);font-size:20px;border:0;background:transparent;color:var(--ink);width:9ch;outline:none;font-variant-numeric:tabular-nums}
+select{font:inherit;border:1px solid var(--line);border-radius:8px;padding:6px 10px;background:var(--bg);color:var(--ink)}
+.stat span{display:block;font-size:12px;color:var(--muted)} .stat b{display:block;font-family:var(--mono);font-size:20px;font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:4px 11px;border-radius:999px;font:inherit;font-size:13px;cursor:pointer}
+.chip:hover{border-color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:12px}
+.coin{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:grid;gap:4px;align-content:start;min-width:0}
+.coin .head{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.coin .head b{font-size:15px} .coin .head small{color:var(--muted)}
+.big{font-family:var(--mono);font-size:24px;font-weight:500;line-height:1.25}
+.meta{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.meta b{color:var(--ink);font-family:var(--mono);font-weight:500}
+.read{font-size:12.5px;border-top:1px solid var(--line);padding-top:6px;margin-top:4px}
+.up{color:var(--up)} .dn{color:var(--dn)} .wk{color:var(--warn)}
+.scroll{overflow-x:auto} .tall{max-height:620px;overflow:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:right;padding:6px 10px;border-bottom:1px solid var(--line);white-space:nowrap;font-variant-numeric:tabular-nums}
+th{font-weight:600;color:var(--muted);font-size:12px;position:sticky;top:0;background:var(--panel);z-index:1}
+th:first-child,td:first-child,td.l,th.l{text-align:left}
+td.why{white-space:normal;min-width:15rem;text-align:left;font-size:12.5px}
+th button{all:unset;cursor:pointer} th button:focus-visible{outline:2px solid var(--acc)}
+.guide ul{margin:0;padding-left:18px;font-size:13.5px;line-height:1.65;display:grid;gap:2px}
+.guide b{font-weight:600}
+.method ul{margin:0;padding-left:18px;color:var(--muted);font-size:13px;line-height:1.6}
+.method b{color:var(--ink)}
+.empty{text-align:center;padding:28px 16px;display:grid;gap:8px;justify-items:center}
+@media (max-width:640px){.hide-sm{display:none}}
+@media (prefers-reduced-motion:reduce){.prog i{transition:none}}
+</style>
+
+<div class="wrap">
+  <header class="card">
+    <div class="top">
+      <div>
+        <h1>BTC Correlations</h1>
+        <p class="note">Type a BTC price and see where each coin and stablecoin dominance would likely be, based on how closely they have followed BTC.</p>
+      </div>
+      <div class="status">
+        <span class="pill" id="scanAt">No saved scan yet</span>
+        <span class="pill warn" id="stale" hidden>New daily candle since this scan</span>
+        <button class="btn" id="refresh" type="button" hidden>Refresh from TradingView</button>
+        <button class="btn ghost" id="missing" type="button" hidden>Fetch missing coins</button>
+      </div>
+    </div>
+    <div class="prog" id="progWrap" hidden><i id="prog"></i></div>
+    <p class="note" id="progText" hidden></p>
+    <div class="banner" id="banner" hidden></div>
+  </header>
+
+  <section class="card">
+    <div class="controls">
+      <div class="field">
+        <label for="target">Your BTC price</label>
+        <div class="inwrap"><span>$</span><input id="target" type="text" inputmode="decimal" autocomplete="off"></div>
+      </div>
+      <div class="stat"><span>BTC in this scan</span><b id="btcNow">–</b></div>
+      <div class="stat"><span>Your move</span><b id="btcMove">–</b></div>
+      <div class="field">
+        <label for="win">Base the estimates on the last</label>
+        <select id="win"><option value="15">15 days</option><option value="30">30 days</option><option value="45">45 days</option><option value="90">90 days</option></select>
+      </div>
+    </div>
+    <div class="chips" id="chips">
+      <button class="chip" type="button" data-pct="-30">−30%</button>
+      <button class="chip" type="button" data-pct="-15">−15%</button>
+      <button class="chip" type="button" data-pct="0">Now</button>
+      <button class="chip" type="button" data-pct="15">+15%</button>
+      <button class="chip" type="button" data-pct="30">+30%</button>
+      <button class="chip" type="button" data-pct="50">+50%</button>
+      <button class="chip" type="button" data-pct="100">+100%</button>
+    </div>
+    <p class="lede" id="lede">The estimates appear after the first scan.</p>
+  </section>
+
+  <main id="main" class="wrap" style="max-width:none">
+    <section class="card empty">
+      <h2>Loading the last saved scan…</h2>
+      <p class="note">This page shows the results of your last refresh. Nothing is pulled from TradingView until you press Refresh.</p>
+    </section>
+  </main>
+
+  <section class="card guide">
+    <h2>How to read the signals</h2>
+    <ul>
+      <li><b>Beta</b> is how far a coin moves for a 1% BTC move (1.5 means about 1.5%). <b>Correlation</b> is how reliably it follows BTC day to day (1 is perfectly). Trust a beta only when its correlation is high.</li>
+      <li><b>Correlation dropping (15d or 30d amber) means decoupling.</b> The coin is moving more on its own; check “vs BTC” for which way.</li>
+      <li><b>Low correlation and vs BTC positive</b>: breaking away upward. This is the alt-season pattern, where BTC goes sideways and the coin keeps climbing.</li>
+      <li><b>Low correlation and vs BTC negative</b>: breaking away downward, from coin-specific weakness or money rotating out.</li>
+      <li><b>Low correlation and vs BTC near zero</b>: noise so far. Wait for a direction.</li>
+      <li><b>Correlation still high but 15d beta well above 90d</b>: still following BTC but moving harder, often the first stage of an alt rally.</li>
+      <li><b>When coins are decoupling,</b> switch the estimate window to 15 or 30 days, since the 90-day beta describes the old phase.</li>
+      <li><b>Stablecoin dominance rising while BTC is flat</b> means cash is building on the sidelines. Falling faster than BTC explains means cash is being spent into crypto, often alts.</li>
+    </ul>
+    <p class="note">“vs BTC” is the coin’s return minus BTC’s: +12% means it beat BTC by 12 percentage points. The comments use 15-day numbers: a correlation under 0.6 counts as decoupling, and beating or lagging BTC by 5 points or more counts as a direction.</p>
+  </section>
+
+  <section class="card method">
+    <h2>How the page works</h2>
+    <ul>
+      <li><b>Saved scans.</b> Opening the page shows the last saved scan and makes no TradingView calls. <b>Refresh</b> pulls 95 daily bars for each coin one at a time, about 1.5 seconds apart (roughly a minute in all), recalculates everything and saves it. A coin that fails keeps its previous result, and <b>Fetch missing coins</b> retries only those.</li>
+      <li><b>Estimate.</b> Price now × (your BTC price ÷ BTC now)<sup>beta</sup>, with the beta from the window you pick. Beta and correlation use daily log returns on the days a coin and BTC both traded.</li>
+      <li><b>Sources.</b> Binance USDT pairs through TradingView, except VVV from Bybit (Binance has no VVV spot history). Stablecoin dominance is CRYPTOCAP:USDT.D + USDC.D and CRYPTOCAP:STABLE.C.D.</li>
+      <li><b>Before acting,</b> remember these are estimates from past behaviour. Coins break from BTC on their own news. Not financial advice.</li>
+    </ul>
+  </section>
+</div>
+
+<script>
+(function () {
+  const COINS = [["btc","BTC","Bitcoin","BINANCE:BTCUSDT"],["eth","ETH","Ethereum","BINANCE:ETHUSDT"],["sol","SOL","Solana","BINANCE:SOLUSDT"],["xrp","XRP","XRP","BINANCE:XRPUSDT"],["bnb","BNB","BNB","BINANCE:BNBUSDT"],["doge","DOGE","Dogecoin","BINANCE:DOGEUSDT"],["ada","ADA","Cardano","BINANCE:ADAUSDT"],["link","LINK","Chainlink","BINANCE:LINKUSDT"],["avax","AVAX","Avalanche","BINANCE:AVAXUSDT"],["pepe","PEPE","Pepe","BINANCE:PEPEUSDT"],["sui","SUI","Sui","BINANCE:SUIUSDT"],["xlm","XLM","Stellar","BINANCE:XLMUSDT"],["render","RENDER","Render","BINANCE:RENDERUSDT"],["icp","ICP","Internet Computer","BINANCE:ICPUSDT"],["near","NEAR","NEAR Protocol","BINANCE:NEARUSDT"],["ondo","ONDO","Ondo","BINANCE:ONDOUSDT"],["aster","ASTER","Aster","BINANCE:ASTERUSDT"],["aave","AAVE","Aave","BINANCE:AAVEUSDT"],["zec","ZEC","Zcash","BINANCE:ZECUSDT"],["tao","TAO","Bittensor","BINANCE:TAOUSDT"],["ena","ENA","Ethena","BINANCE:ENAUSDT"],["arb","ARB","Arbitrum","BINANCE:ARBUSDT"],["ldo","LDO","Lido DAO","BINANCE:LDOUSDT"],["fet","FET","Fetch.ai (ASI)","BINANCE:FETUSDT"],["hype","HYPE","Hyperliquid","BINANCE:HYPEUSDT"],["jup","JUP","Jupiter","BINANCE:JUPUSDT"],["ray","RAY","Raydium","BINANCE:RAYUSDT"],["vvv","VVV","Venice Token","BYBIT:VVVUSDT"],["ltc","LTC","Litecoin","BINANCE:LTCUSDT"],["gram","GRAM","Gram (prev. Toncoin)","BINANCE:GRAMUSDT"],["wif","WIF","dogwifhat","BINANCE:WIFUSDT"]];
+  const DOMS = [["usdtd","USDT.D","Tether dominance","CRYPTOCAP:USDT.D"],["usdcd","USDC.D","USD Coin dominance","CRYPTOCAP:USDC.D"],["stabled","STABLE.C.D","All stablecoins dominance","CRYPTOCAP:STABLE.C.D"]];
+  const ALL = COINS.concat(DOMS);
+  const SERVERS = ['Trading View', 'Trading_View'];
+  const GAP_MS = 1500, WINS = [15, 30, 45, 90];
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  /* ---------- analysis ---------- */
+  const r2 = (v) => Math.round(v * 100) / 100;
+  function stats(x, y) {
+    const n = x.length; if (n < 3) return { beta: null, corr: null };
+    const mx = x.reduce((s, v) => s + v, 0) / n, my = y.reduce((s, v) => s + v, 0) / n;
+    let sxy = 0, sxx = 0, syy = 0;
+    for (let i = 0; i < n; i++) { sxy += (x[i] - mx) * (y[i] - my); sxx += (x[i] - mx) ** 2; syy += (y[i] - my) ** 2; }
+    return { beta: sxx ? r2(sxy / sxx) : null, corr: sxx && syy ? r2(sxy / Math.sqrt(sxx * syy)) : null };
+  }
+  function returns(pts) {
+    const x = [], y = [];
+    for (let i = 1; i < pts.length; i++) { x.push(Math.log(pts[i].btc / pts[i - 1].btc)); y.push(Math.log(pts[i].v / pts[i - 1].v)); }
+    return { x, y };
+  }
+  function windows(x, y) {
+    const o = {};
+    for (const k of WINS) { const s = stats(x.slice(-k), y.slice(-k)); o['beta' + k] = s.beta; o['corr' + k] = s.corr; }
+    return o;
+  }
+  function coinRow(id, coin, name, bars, btcBy) {
+    const pts = bars.filter((b) => btcBy.has(b.day)).map((b) => ({ day: b.day, btc: btcBy.get(b.day), v: b.close }));
+    if (pts.length < 5) return null;
+    const { x, y } = returns(pts), w = windows(x, y);
+    const vs = (k) => { const a = pts[pts.length - 1], b = pts[Math.max(0, pts.length - 1 - k)]; return Math.round((a.v / b.v - a.btc / b.btc) * 1000) / 1000; };
+    const vs15 = vs(15), vs30 = vs(30), c15 = w.corr15, c90 = w.corr90;
+    const note = c15 < 0.6
+      ? (vs15 >= 0.05 ? 'Breaking away upward: beating BTC on its own' : vs15 <= -0.05 ? 'Breaking away downward: falling behind BTC on its own' : 'Moving on its own, no clear direction yet')
+      : (w.beta15 >= w.beta90 + 0.3 && vs15 > 0 ? 'Following BTC but moving harder: early alt-rally sign'
+        : vs15 >= 0.05 ? 'Following BTC and beating it' : vs15 <= -0.05 ? 'Following BTC but lagging it' : 'Moving with BTC as usual');
+    const diff = w.corr30 - c90;
+    return Object.assign({ id, coin, name, price: bars[bars.length - 1].close, days: x.length, vs15, vs30, note,
+      fit: c90 >= 0.8 ? 'Strong' : c90 >= 0.6 ? 'Moderate' : 'Weak',
+      trend: diff <= -0.15 ? 'Weakening' : diff >= 0.15 ? 'Strengthening' : 'Steady' }, w);
+  }
+  function domRow(id, name, pts) {
+    if (pts.length < 10) return null;
+    const { x, y } = returns(pts), w = windows(x, y);
+    const last = pts[pts.length - 1], wk = pts[pts.length - 8];
+    const move7 = last.v / wk.v - 1, expected7 = Math.pow(last.btc / wk.btc, w.beta90) - 1, gap7 = move7 - expected7;
+    const dc = Math.abs(w.corr30) - Math.abs(w.corr90);
+    return Object.assign({ id, name, level: last.v, move7, expected7, gap7,
+      trend: dc <= -0.15 ? 'Weakening' : dc >= 0.15 ? 'Strengthening' : 'Steady',
+      signal: gap7 >= 0.02 ? 'Rising more than BTC explains' : gap7 <= -0.02 ? 'Falling more than BTC explains' : 'In line with BTC' }, w);
+  }
+  function analyzeAll(IN) {
+    const btc = IN.btc, btcBy = new Map(btc.map((b) => [b.day, b.close]));
+    const coins = [];
+    for (const [id, coin, name] of COINS) { if (id === 'btc' || !IN[id]) continue; const r = coinRow(id, coin, name, IN[id], btcBy); if (r) coins.push(r); }
+    const doms = [];
+    if (IN.usdtd && IN.usdcd) {
+      const c = new Map(IN.usdcd.map((b) => [b.day, b.close]));
+      const pts = IN.usdtd.filter((b) => btcBy.has(b.day) && c.has(b.day)).map((b) => ({ btc: btcBy.get(b.day), v: b.close + c.get(b.day) }));
+      const r = domRow('usdt_usdc', 'USDT.D + USDC.D', pts); if (r) doms.push(r);
+    }
+    if (IN.stabled) {
+      const pts = IN.stabled.filter((b) => btcBy.has(b.day)).map((b) => ({ btc: btcBy.get(b.day), v: b.close }));
+      const r = domRow('all', 'STABLE.C.D (all stablecoins)', pts); if (r) doms.push(r);
+    }
+    return { btc: { price: btc[btc.length - 1].close, day: btc[btc.length - 1].day }, coins, doms };
+  }
+
+  /* ---------- formatting ---------- */
+  const money = (v) => { if (v == null || !isFinite(v)) return '–'; if (v < 1) return '$' + v.toLocaleString('en-US', { minimumSignificantDigits: 4, maximumSignificantDigits: 4 }); const d = v >= 1000 ? 0 : v >= 10 ? 2 : 3; return '$' + v.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d }); };
+  const pct = (v) => (v == null || !isFinite(v) ? '–' : (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v * 100).toFixed(1) + '%');
+  const f2 = (v) => (v == null || !isFinite(v) ? '–' : v.toFixed(2));
+  const tone = (v) => (v > 0 ? 'up' : v < 0 ? 'dn' : '');
+  const corrCls = (v) => (v != null && v < 0.6 ? 'wk' : '');
+  const noteCls = (s) => (/upward|beating|harder/.test(s) ? 'up' : /downward|lagging/.test(s) ? 'dn' : '');
+  const when = (iso) => new Date(iso).toLocaleString([], { weekday: 'short', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' });
+  const ago = (iso) => { const m = (Date.now() - Date.parse(iso)) / 6e4; if (m < 1) return 'just now'; if (m < 60) return Math.round(m) + ' min ago'; if (m < 48 * 60) return Math.round(m / 60) + ' h ago'; return Math.round(m / 1440) + ' days ago'; };
+
+  /* ---------- state ---------- */
+  let SNAP = null, DB = null, MCP = null, SERVER = null, CAN_WRITE = false, RUNNING = false, LAST_OLD = null;
+  let SORT = { k: null, dir: -1 };
+  const PREF_KEY = 'btc-correlations-prefs';
+  let PREF = { target: 100000, win: 90 };
+  try { const p = JSON.parse(localStorage.getItem(PREF_KEY) || 'null'); if (p) { if (p.target > 0) PREF.target = p.target; if (WINS.includes(p.win)) PREF.win = p.win; } } catch (e) { /* defaults */ }
+  const savePref = () => { try { localStorage.setItem(PREF_KEY, JSON.stringify(PREF)); } catch (e) { /* per-browser only */ } };
+
+  /* ---------- rendering ---------- */
+  const proj = (price, beta, now) => (beta == null || !now ? null : price * Math.pow(PREF.target / now, beta));
+  function renderTop() {
+    const now = SNAP && SNAP.btc ? SNAP.btc.price : null, win = PREF.win;
+    $('btcNow').textContent = money(now);
+    const mv = now ? PREF.target / now - 1 : null;
+    $('btcMove').textContent = pct(mv); $('btcMove').className = tone(mv);
+    const eth = SNAP && SNAP.coins ? SNAP.coins.find((r) => r.coin === 'ETH') : null;
+    if (now && eth) {
+      const ep = proj(eth.price, eth['beta' + win], now);
+      $('lede').innerHTML = `If BTC goes from <b>${money(now)}</b> to <b>${money(PREF.target)}</b> (${pct(mv)}), ETH would be about <b>${money(ep)}</b> if it keeps following BTC the way it has for the last ${win} days.`;
+    } else $('lede').textContent = 'The estimates appear after the first scan.';
+  }
+  function render() {
+    renderTop();
+    if (!SNAP || !SNAP.coins || !SNAP.coins.length) {
+      $('main').innerHTML = `<section class="card empty"><h2>No saved scan yet</h2><p class="note">${CAN_WRITE ? 'Press <b>Refresh from TradingView</b> to run the first scan. It takes about a minute and is saved for next time.' : 'The owner of this page has not run a scan yet.'}</p></section>`;
+      return;
+    }
+    const now = SNAP.btc.price, win = PREF.win, bk = 'beta' + win;
+    let h = '';
+    h += `<section class="card"><h2>Stablecoin dominance</h2><p class="note">The share of the crypto market held in stablecoins. It usually moves opposite to BTC; when it doesn't, that's worth noticing.</p><div class="two">`;
+    for (const d of SNAP.doms || []) {
+      const pd = proj(d.level, d[bk], now), ch = pd != null ? pd / d.level - 1 : null;
+      const sig = d.signal === 'In line with BTC' ? '' : 'wk';
+      const why = d.signal === 'Rising more than BTC explains'
+        ? 'More of the market is sitting in stablecoins than BTC’s price alone would suggest: often new stablecoins being minted (cash waiting to buy) or people moving to cash. BTC’s direction tells you which.'
+        : d.signal === 'Falling more than BTC explains' ? 'Stablecoin share is shrinking faster than BTC’s move explains: often cash being spent into crypto (often alts) or stablecoins being redeemed.'
+        : 'Doing what BTC’s move predicts: no extra signal right now.';
+      h += `<div class="coin"><div class="head"><b>${esc(d.name)}</b>${d.stale_at ? '<span class="pill warn">old</span>' : ''}</div>
+        <span class="note">At your BTC price</span><div class="big">${pd != null ? pd.toFixed(2) + '%' : '–'}</div>
+        <div class="${tone(-ch)}">${pct(ch)} from now</div>
+        <div class="meta">Now <b>${d.level.toFixed(2)}%</b> · beta ${win}d <b>${f2(d[bk])}</b><br>Correlation ${WINS.map((k) => `${k}d <b>${f2(d['corr' + k])}</b>`).join(' · ')}</div>
+        <div class="read"><span class="note">Last 7 days: is it moving with BTC?</span><br><b class="${sig}">${esc(d.signal)}</b><br><span class="meta">Moved ${pct(d.move7)}; BTC's move alone explains ${pct(d.expected7)}; gap ${pct(d.gap7)}</span><p class="note">${why}</p></div></div>`;
+    }
+    h += `</div></section>`;
+    h += `<section class="card"><h2>Where each coin would be</h2><p class="note">Estimated price if BTC trades at your price, using each coin's ${win}-day beta.</p><div class="grid">`;
+    for (const r of SNAP.coins) {
+      const p = proj(r.price, r[bk], now), ch = p != null ? p / r.price - 1 : null;
+      h += `<article class="coin"><div class="head"><b>${esc(r.coin)}</b><small>${esc(r.name)}</small>${r.stale_at ? '<span class="pill warn">old</span>' : ''}</div>
+        <div class="big">${money(p)}</div><div class="${tone(ch)}">${pct(ch)} from now</div>
+        <div class="meta">Now <b>${money(r.price)}</b> · beta <b>${f2(r[bk])}</b> · <span class="${r.fit === 'Weak' ? 'wk' : ''}">${esc(r.fit)}</span>${r.trend !== 'Steady' ? ` · <span class="${r.trend === 'Weakening' ? 'wk' : 'up'}">${esc(r.trend)}</span>` : ''}</div>
+        <div class="meta">vs BTC: 15d <span class="${tone(r.vs15)}">${pct(r.vs15)}</span> · 30d <span class="${tone(r.vs30)}">${pct(r.vs30)}</span></div>
+        <div class="read ${noteCls(r.note)}">${esc(r.note)}</div></article>`;
+    }
+    h += `</div></section>`;
+    h += table(SNAP.coins, bk, win);
+    $('main').innerHTML = h;
+  }
+  function table(rows, bk, win) {
+    const COLS = [['coin', 'Coin', 'l'], ['price', 'Price now'], [bk, 'Beta ' + win + 'd'], ['corr15', 'Corr 15d'], ['corr30', 'Corr 30d'], ['corr45', 'Corr 45d', 'hide-sm'], ['corr90', 'Corr 90d'], ['fit', 'Follows BTC', 'l'], ['trend', 'Trend', 'l'], ['vs15', 'vs BTC 15d'], ['vs30', 'vs BTC 30d'], ['note', 'What it means', 'l']];
+    const list = rows.slice();
+    if (SORT.k) list.sort((a, b) => { const k = SORT.k === 'beta' ? bk : SORT.k, A = a[k], B = b[k]; if (A == null) return 1; if (B == null) return -1; return (typeof A === 'number' ? A - B : String(A).localeCompare(String(B))) * SORT.dir; });
+    let h = `<section class="card"><h2>How closely each coin follows BTC</h2><p class="note">Correlations under 0.6 are amber. When 15d drops well below 90d, the coin is breaking away from BTC. Trend compares 30 days with 90. Press a column to sort.</p><div class="scroll tall"><table><thead><tr>`;
+    h += COLS.map((c) => { const key = c[0] === bk ? 'beta' : c[0], on = SORT.k === key; return `<th class="${c[2] || ''}"${on ? ` aria-sort="${SORT.dir > 0 ? 'ascending' : 'descending'}"` : ''}><button type="button" data-sort="${key}">${c[1]}${on ? (SORT.dir > 0 ? ' ↑' : ' ↓') : ''}</button></th>`; }).join('');
+    h += '</tr></thead><tbody>';
+    for (const r of list) {
+      h += `<tr><td><b>${esc(r.coin)}</b>${r.stale_at ? ' <span class="pill warn">old</span>' : ''}</td><td class="num">${money(r.price)}</td><td class="num">${f2(r[bk])}</td>
+        ${['corr15', 'corr30', 'corr45', 'corr90'].map((k) => `<td class="num ${corrCls(r[k])} ${k === 'corr45' ? 'hide-sm' : ''}">${f2(r[k])}</td>`).join('')}
+        <td class="l ${r.fit === 'Weak' ? 'wk' : ''}">${esc(r.fit)}</td><td class="l ${r.trend === 'Weakening' ? 'wk' : r.trend === 'Strengthening' ? 'up' : ''}">${esc(r.trend)}</td>
+        <td class="num ${tone(r.vs15)}">${pct(r.vs15)}</td><td class="num ${tone(r.vs30)}">${pct(r.vs30)}</td><td class="why ${noteCls(r.note)}">${esc(r.note)}</td></tr>`;
+    }
+    return h + '</tbody></table></div></section>';
+  }
+  function renderStatus() {
+    const at = SNAP && SNAP.at;
+    const candle = SNAP && SNAP.btc && SNAP.btc.day ? new Date(SNAP.btc.day + 'T00:00:00Z').toLocaleDateString([], { day: 'numeric', month: 'short', timeZone: 'UTC' }) : null;
+    $('scanAt').textContent = at ? `Last scan ${when(at)} · ${ago(at)}${candle ? ' · prices to ' + candle : ''}` : 'No saved scan yet';
+    $('scanAt').className = 'pill ' + (at ? 'acc' : '');
+    const lastClose = new Date(); lastClose.setUTCHours(0, 0, 0, 0);
+    const oldPrices = SNAP && SNAP.btc && SNAP.btc.day && lastClose.getTime() - Date.parse(SNAP.btc.day) > 2 * 864e5;
+    $('stale').hidden = !(at && (Date.parse(at) < lastClose.getTime() || oldPrices));
+    $('stale').textContent = oldPrices ? 'Prices are out of date: press Refresh' : 'New daily candle since this scan';
+    $('refresh').hidden = !CAN_WRITE || !MCP; $('refresh').disabled = RUNNING;
+    const miss = (SNAP && SNAP.failed) || [];
+    $('missing').hidden = !CAN_WRITE || !MCP || RUNNING || !miss.length;
+    $('missing').textContent = 'Fetch missing coins (' + miss.length + ')';
+  }
+  function banner(text, kind) { const b = $('banner'); b.hidden = !text; b.textContent = text || ''; b.className = 'banner ' + (kind || ''); }
+
+  /* ---------- controls ---------- */
+  $('target').value = Math.round(PREF.target).toLocaleString('en-US');
+  $('win').value = String(PREF.win);
+  $('target').addEventListener('input', () => { const v = Number($('target').value.replace(/[$,\s]/g, '')); if (v > 0 && isFinite(v)) { PREF.target = v; savePref(); render(); } });
+  $('target').addEventListener('blur', () => { $('target').value = Math.round(PREF.target).toLocaleString('en-US'); });
+  $('win').addEventListener('change', () => { PREF.win = Number($('win').value); savePref(); render(); });
+  $('chips').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-pct]'); if (!b || !SNAP || !SNAP.btc) return;
+    const p = Number(b.dataset.pct), now = SNAP.btc.price;
+    PREF.target = p === 0 ? Math.round(now) : Math.round(now * (1 + p / 100) / 100) * 100; savePref();
+    $('target').value = Math.round(PREF.target).toLocaleString('en-US'); render();
+  });
+  document.addEventListener('click', (e) => {
+    const so = e.target.closest('[data-sort]'); if (!so) return;
+    const k = so.dataset.sort; SORT = SORT.k === k ? { k, dir: -SORT.dir } : { k, dir: ['coin', 'fit', 'trend', 'note'].includes(k) ? 1 : -1 }; render();
+  });
+
+  /* ---------- TradingView refresh ---------- */
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  const FIX = {
+    needs_reauth: 'TradingView needs reconnecting. Reconnect it in claude.ai Settings → Connectors, then press Refresh again.',
+    server_not_connected: 'TradingView is not connected for you. Add it in claude.ai Settings → Connectors, then press Refresh again.',
+    selection_required: 'You have more than one TradingView connector. Choose one when claude.ai asks, then press Refresh again.',
+    approval_required: 'TradingView access needs your approval. Press Refresh again and allow it when asked.',
+    not_in_manifest: 'TradingView access is turned off for this page. Turn it on in the page permissions, then press Refresh again.',
+    blocked_by_policy: 'Your organization blocks this TradingView tool.',
+  };
+  const dayStr = (ms) => new Date(ms).toISOString().slice(0, 10);
+  const ATTEMPTS = () => {
+    const now = Date.now(), today = dayStr(now);
+    return [
+      { symbol: null, interval: '1D', count: 95, format: 'columns', date_to: today },
+      { symbol: null, interval: '1D', date_from: dayStr(now - 140 * 864e5), date_to: dayStr(now + 864e5), format: 'rows' },
+      { symbol: null, interval: '1D', count: 600, format: 'columns' },
+    ];
+  };
+  const toRows = (p) => {
+    const b = p.bars;
+    if (Array.isArray(b)) return b.map((x) => ({ day: new Date(x.t * 1000).toISOString().slice(0, 10), close: Number(x.c) })).filter((x) => x.close > 0 && isFinite(x.close));
+    if (b && Array.isArray(b.t)) return b.t.map((t, k) => ({ day: new Date(t * 1000).toISOString().slice(0, 10), close: Number(b.c[k]) })).filter((x) => x.close > 0 && isFinite(x.close));
+    return null;
+  };
+  async function fetchBars(sym) {
+    let oldErr = null;
+    for (const args of ATTEMPTS()) {
+      args.symbol = sym;
+      try { return await fetchOnce(args); }
+      catch (e) { if (e && e.code === 'old_data') { oldErr = e; continue; } throw e; }
+    }
+    throw oldErr;
+  }
+  async function fetchOnce(args) {
+    let lastErr = null;
+    for (let i = 0; i < SERVERS.length; i++) {
+      const name = SERVER || SERVERS[i];
+      try {
+        const today = dayStr(Date.now());
+        const res = await MCP.callTool(name, 'mcp-tv-get-ohlcv', args, { cache: false });
+        SERVER = name;
+        let p = res.payload; if (typeof p === 'string') { try { p = JSON.parse(p); } catch (e) { /* keep text */ } }
+        const all = p && p.success !== false ? toRows(p) : null;
+        if (!all) throw { code: 'tool_error', message: (p && (p.error || p.message)) || 'TradingView returned no bars' };
+        const rows = all.slice(-95);
+        const lastDay = rows.length ? rows[rows.length - 1].day : null;
+        if (!lastDay || Date.parse(today) - Date.parse(lastDay) > 2 * 864e5) { LAST_OLD = lastDay || 'none'; throw { code: 'old_data', message: 'TradingView returned old bars (newest ' + (lastDay || 'none') + ')' }; }
+        return rows;
+      } catch (e) {
+        lastErr = e;
+        if (!SERVER && (e.code === 'server_not_connected' || e.code === 'not_in_manifest' || e.code === 'server_not_found') && i < SERVERS.length - 1) continue;
+        break;
+      }
+    }
+    throw lastErr;
+  }
+  const isQuota = (e) => /quota|suspend|suspicion|too many/i.test(String(e && e.message));
+
+  async function run(targets) {
+    if (RUNNING || !MCP || !DB) return;
+    RUNNING = true; renderStatus(); banner('');
+    $('progWrap').hidden = false; $('progText').hidden = false;
+    const IN = {}, failed = [];
+    let stopped = null; LAST_OLD = null;
+    for (let i = 0; i < targets.length; i++) {
+      const [id, coin, , sym] = targets[i];
+      $('progText').textContent = `Loading ${coin} (${i + 1} of ${targets.length})…`;
+      try { IN[id] = await fetchBars(sym); }
+      catch (e) {
+        if (e && e.code === 'server_unavailable' && e.retryable) { await sleep(2500 + Math.random() * 1500); try { IN[id] = await fetchBars(sym); } catch (e2) { e = e2; } }
+        if (!IN[id]) {
+          if (FIX[e && e.code]) { stopped = FIX[e.code]; failed.push(...targets.slice(i).map((t) => t[0])); break; }
+          if (isQuota(e)) { stopped = 'TradingView paused access for a minute because of the number of calls. What loaded is saved. Wait at least a minute, then press Fetch missing coins.'; failed.push(...targets.slice(i).map((t) => t[0])); break; }
+          failed.push(id);
+        }
+      }
+      $('prog').style.width = Math.round(100 * (i + 1) / targets.length) + '%';
+      if (i < targets.length - 1) await sleep(GAP_MS);
+    }
+    if (Object.keys(IN).length) {
+      $('progText').textContent = 'Calculating and saving…';
+      try { await save(IN, failed); } catch (e) { stopped = stopped || (e && e.message === 'no-btc' ? 'BTC did not load, so nothing could be recalculated. Press Refresh again in a minute.' : 'Calculated the coins but could not save the scan. Press Refresh again in a moment.'); }
+    }
+    RUNNING = false; $('progWrap').hidden = true; $('progText').hidden = true; $('prog').style.width = '0';
+    const got = Object.keys(IN).length;
+    if (!got && LAST_OLD) banner(`TradingView sent this page old prices for every coin (newest candle ${LAST_OLD}), so nothing was saved. Your previous scan is unchanged. Ask Claude to look into it.`, 'bad');
+    else if (stopped) banner(stopped, 'bad');
+    else if (failed.length) banner(`${got} updated. ${failed.length} did not load (${failed.map((id) => (ALL.find((c) => c[0] === id) || [id, id])[1]).join(', ')}); they keep their previous result. Press Fetch missing coins to retry them.`, '');
+    else banner(`All ${got} updated and saved.`, 'ok');
+    renderStatus();
+  }
+
+  async function save(IN, failed) {
+    const prevAt = SNAP && SNAP.at;
+    let closes = (SNAP && SNAP.closes) || {};
+    for (const id of Object.keys(IN)) closes[id] = IN[id].map((b) => [b.day, b.close]);
+    closes = Object.assign({}, closes);
+    const all = {}; for (const id of Object.keys(closes)) all[id] = closes[id].map((x) => ({ day: x[0], close: x[1] }));
+    if (!all.btc) throw new Error('no-btc');
+    const res = analyzeAll(all);
+    const fresh = new Set(Object.keys(IN));
+    const prevCoins = new Map(((SNAP && SNAP.coins) || []).map((r) => [r.id, r]));
+    const prevDoms = new Map(((SNAP && SNAP.doms) || []).map((r) => [r.id, r]));
+    const failedSet = new Set(failed);
+    res.coins.forEach((r) => { if (failedSet.has(r.id)) r.stale_at = (prevCoins.get(r.id) || {}).stale_at || prevAt; });
+    const domStale = { usdt_usdc: ['usdtd', 'usdcd'], all: ['stabled'] };
+    res.doms.forEach((d) => { if (domStale[d.id].some((id) => failedSet.has(id))) d.stale_at = (prevDoms.get(d.id) || {}).stale_at || prevAt; });
+    const missing = ALL.filter((c) => !closes[c[0]] || failedSet.has(c[0])).map((c) => c[0]);
+    const doc = { at: new Date().toISOString(), btc: res.btc, coins: res.coins, doms: res.doms, failed: missing, closes, v: 1 };
+    await DB.doc('scan/latest').set(doc);
+    SNAP = doc; render(); renderStatus();
+  }
+
+  /* ---------- boot ---------- */
+  async function boot() {
+    const [db, user, mcp] = await Promise.all([claude.use('db'), claude.use('user'), claude.use('mcp')]);
+    DB = db; MCP = mcp;
+    try { CAN_WRITE = user ? !!(await user.isOwner()) || !!(await user.canEdit()) : false; } catch (e) { CAN_WRITE = false; }
+    if (!DB) { $('main').innerHTML = '<section class="card empty"><h2>Saved scans are not available here</h2><p class="note">Open this page in claude.ai to see the last scan.</p></section>'; renderStatus(); return; }
+    renderStatus();
+    DB.doc('scan/latest').onSnapshot((snap) => {
+      SNAP = snap.exists ? snap.data() : null;
+      if (!RUNNING) render();
+      renderStatus();
+    }, () => { banner('Lost the connection to the saved scan. Reload the page.', 'bad'); });
+    $('refresh').addEventListener('click', () => run(ALL.slice()));
+    $('missing').addEventListener('click', () => { const ids = (SNAP && SNAP.failed) || []; run(ALL.filter((c) => ids.includes(c[0]))); });
+    setInterval(renderStatus, 60000);
+  }
+  renderTop();
+  if (window.claude && window.claude.use) boot();
+  else $('main').innerHTML = '<section class="card empty"><h2>Saved scans are not available here</h2><p class="note">Open this page in claude.ai to see the last scan.</p></section>';
+})();
+</script>
