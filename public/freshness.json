@@ -1,7 +1,7 @@
 {
- "generated": "2026-11-18 00:36 UTC",
- "checked_at": 1794962177,
- "input_hash": "185f68a81e011e905deb033917c657854780487f8ab813d274bdc04a0f9c1a0e",
+ "generated": "2026-11-19 00:16 UTC",
+ "checked_at": 1795047381,
+ "input_hash": "2736b20a765370da99d9561e56439f91b8c696dee37f2c02f065346ceafd3846",
  "series": [
   {
    "id": "binance/AAVEUSDT/1D",
@@ -9,10 +9,10 @@
    "symbol": "AAVEUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961679,
-   "rows": 2225,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047042,
+   "rows": 2226,
    "frozen": false
   },
   {
@@ -21,10 +21,10 @@
    "symbol": "ADAUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961647,
-   "rows": 3137,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047024,
+   "rows": 3138,
    "frozen": false
   },
   {
@@ -33,10 +33,10 @@
    "symbol": "ARBUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961730,
-   "rows": 1336,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047056,
+   "rows": 1337,
    "frozen": false
   },
   {
@@ -45,10 +45,10 @@
    "symbol": "ASTERUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961740,
-   "rows": 408,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047063,
+   "rows": 409,
    "frozen": false
   },
   {
@@ -57,10 +57,10 @@
    "symbol": "AVAXUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961655,
-   "rows": 2248,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047027,
+   "rows": 2249,
    "frozen": false
   },
   {
@@ -69,10 +69,10 @@
    "symbol": "BNBUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961643,
-   "rows": 3299,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047020,
+   "rows": 3300,
    "frozen": false
   },
   {
@@ -81,10 +81,10 @@
    "symbol": "BTCUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961621,
-   "rows": 3380,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047016,
+   "rows": 3381,
    "frozen": false
   },
   {
@@ -93,10 +93,10 @@
    "symbol": "DOGEUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961653,
-   "rows": 2693,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047026,
+   "rows": 2694,
    "frozen": false
   },
   {
@@ -105,10 +105,10 @@
    "symbol": "ENAUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961684,
-   "rows": 960,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047045,
+   "rows": 961,
    "frozen": false
   },
   {
@@ -117,10 +117,10 @@
    "symbol": "ETHUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961628,
-   "rows": 3380,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047017,
+   "rows": 3381,
    "frozen": false
   },
   {
@@ -129,10 +129,10 @@
    "symbol": "FETUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961689,
-   "rows": 2820,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047049,
+   "rows": 2821,
    "frozen": false
   },
   {
@@ -141,10 +141,10 @@
    "symbol": "GRAMUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961740,
-   "rows": 139,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047063,
+   "rows": 140,
    "frozen": false
   },
   {
@@ -153,10 +153,10 @@
    "symbol": "HYPEUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961741,
-   "rows": 55,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047064,
+   "rows": 56,
    "frozen": false
   },
   {
@@ -165,10 +165,10 @@
    "symbol": "ICPUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961676,
-   "rows": 2017,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047040,
+   "rows": 2018,
    "frozen": false
   },
   {
@@ -177,10 +177,10 @@
    "symbol": "JUPUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961707,
-   "rows": 1022,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047051,
+   "rows": 1023,
    "frozen": false
   },
   {
@@ -189,10 +189,10 @@
    "symbol": "LDOUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961732,
-   "rows": 1654,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047057,
+   "rows": 1655,
    "frozen": false
   },
   {
@@ -201,10 +201,10 @@
    "symbol": "LINKUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961658,
-   "rows": 2863,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047029,
+   "rows": 2864,
    "frozen": false
   },
   {
@@ -213,10 +213,10 @@
    "symbol": "LTCUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961662,
-   "rows": 3262,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047031,
+   "rows": 3263,
    "frozen": false
   },
   {
@@ -225,10 +225,10 @@
    "symbol": "NEARUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961674,
-   "rows": 2226,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047039,
+   "rows": 2227,
    "frozen": false
   },
   {
@@ -237,10 +237,10 @@
    "symbol": "ONDOUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961705,
-   "rows": 586,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047050,
+   "rows": 587,
    "frozen": false
   },
   {
@@ -249,10 +249,10 @@
    "symbol": "PEPEUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961725,
-   "rows": 1293,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047053,
+   "rows": 1294,
    "frozen": false
   },
   {
@@ -261,10 +261,10 @@
    "symbol": "RAYUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961715,
-   "rows": 1926,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047052,
+   "rows": 1927,
    "frozen": false
   },
   {
@@ -273,10 +273,10 @@
    "symbol": "RENDERUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961686,
-   "rows": 845,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047047,
+   "rows": 846,
    "frozen": false
   },
   {
@@ -285,10 +285,10 @@
    "symbol": "SOLUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961636,
-   "rows": 2290,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047018,
+   "rows": 2291,
    "frozen": false
   },
   {
@@ -297,10 +297,10 @@
    "symbol": "SUIUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961672,
-   "rows": 1295,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047038,
+   "rows": 1296,
    "frozen": false
   },
   {
@@ -309,10 +309,10 @@
    "symbol": "TAOUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961685,
-   "rows": 951,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047046,
+   "rows": 952,
    "frozen": false
   },
   {
@@ -321,10 +321,10 @@
    "symbol": "WIFUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961727,
-   "rows": 988,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047055,
+   "rows": 989,
    "frozen": false
   },
   {
@@ -333,10 +333,10 @@
    "symbol": "XLMUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961665,
-   "rows": 3093,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047033,
+   "rows": 3094,
    "frozen": false
   },
   {
@@ -345,10 +345,10 @@
    "symbol": "XRPUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961645,
-   "rows": 3120,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047022,
+   "rows": 3121,
    "frozen": false
   },
   {
@@ -357,10 +357,10 @@
    "symbol": "ZECUSDT",
    "tf": "1D",
    "period_s": 86400,
-   "last_open": 1794873600,
-   "last_close": 1794960000,
-   "fetched_at": 1794961738,
-   "rows": 2799,
+   "last_open": 1794960000,
+   "last_close": 1795046400,
+   "fetched_at": 1795047061,
+   "rows": 2800,
    "frozen": false
   },
   {
