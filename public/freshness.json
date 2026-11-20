@@ -1,7 +1,7 @@
 {
- "generated": "2026-11-20 08:42 UTC",
- "checked_at": 1795164161,
- "input_hash": "e418e7ebe9905e686ed4018b7717ad79a3b6d1911b5e18354c73b276ab480cd9",
+ "generated": "2026-11-20 12:04 UTC",
+ "checked_at": 1795176246,
+ "input_hash": "ba698fa99d4a0411caf1792336950a3ae3384f19ee6ca23a1271155121a29e60",
  "series": [
   {
    "id": "binance/AAVEUSDT/1D",
@@ -407,8 +407,8 @@
    "period_s": 14400,
    "last_open": 1795147200,
    "last_close": 1795161600,
-   "fetched_at": 1795163947,
-   "rows": 1940,
+   "fetched_at": 1795176059,
+   "rows": 6326,
    "frozen": false
   }
  ],
