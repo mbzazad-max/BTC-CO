@@ -16,6 +16,7 @@ financial advice.
   |---|---|
   | BTC and 29 coins (`BINANCE:<COIN>USDT`, 1D) | `binance/<COIN>USDT/1D` (laptop UPLOAD.bat) |
   | USDT.D, USDC.D (1D) | `tv/CRYPTOCAP_USDT.D/1D`, `tv/CRYPTOCAP_USDC.D/1D` (frozen history, TradingView answer of 13 Nov 2026), then days made from the 4H series of the daily 11:30 TradingView task (a UTC day counts once its 20:00 candle has closed) |
+  | USDT.D-only card (added 28 Nov 2026) | no new series: `build/usdt_card.js` runs the page's own dominance code (its `domRow`, taken from the original page as written) on the same saved USDT.D and BTC closes, and adds a second card "USDT.D (Tether only)" next to USDT.D + USDC.D. The page renders it with its own card code; the page file is unchanged. Same "old" rule as the page. `tests/parity.js` checks it against the page's own USDT.D + USDC.D card run with USDC.D held near zero. |
   | VVV (Bybit), STABLE.C.D | left out (owner's choice, 16 Nov 2026): those two cards don't appear |
 
   AVAX, RENDER, ARB, FET, RAY and WIF were added to Market-Data on 16 Nov 2026 as daily series for the laptop uploader.

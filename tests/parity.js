@@ -36,9 +36,24 @@ const built = JSON.parse(fs.readFileSync(path.join(ROOT, 'public/snapshot.json')
   const fresh = built.coins.filter((r) => !r.stale_at);
   for (const r of fresh) same('coin ' + r.coin, doc.coins.find((x) => x.id === r.id), r);
   same('coins loaded', doc.coins.map((r) => r.id).filter((id) => fresh.some((r) => r.id === id)), fresh.map((r) => r.id));
-  for (const d of built.doms.filter((x) => !x.stale_at)) same('dominance ' + d.id, doc.doms.find((x) => x.id === d.id), d);
+  for (const d of built.doms.filter((x) => !x.stale_at && x.id !== 'usdt')) same('dominance ' + d.id, doc.doms.find((x) => x.id === d.id), d);
   for (const id of Object.keys(doc.closes)) if (fresh.some((r) => r.id === id) || ['btc', 'usdtd', 'usdcd'].includes(id)) same('closes ' + id, doc.closes[id], built.closes[id]);
   same('missing', doc.failed, built.failed);
+  // USDT.D-only card (build/usdt_card.js): the page's own USDT.D + USDC.D card, run again with USDC.D held at a
+  // vanishing constant (the page refuses zero), must give the same numbers: betas/correlations/signal/trend exactly,
+  // level and 7-day moves to 1e-9.
+  const u = built.doms.find((x) => x.id === 'usdt');
+  if (!u) diffs.push('USDT.D card missing from the build');
+  else if (!u.stale_at) {
+    const c2 = Object.assign({}, candles, { 'CRYPTOCAP:USDC.D': candles['CRYPTOCAP:USDC.D'].map((r) => Object.assign({}, r, { c: 1e-12 })) });
+    const { doc: d2 } = await runPage({ nodeModules: NM, candles: c2, previous: null });
+    const ref = d2.doms.find((x) => x.id === 'usdt_usdc');
+    for (const k of Object.keys(ref)) {
+      if (k === 'id' || k === 'name') continue;
+      const a = ref[k], b = u[k];
+      if (typeof a === 'number' && !/^(beta|corr)/.test(k) ? Math.abs(a - b) > 1e-9 : a !== b) diffs.push(`USDT.D card ${k}: page ${a} vs build ${b}`);
+    }
+  }
   const n = fresh.length + built.doms.length + 2;
   if (diffs.length) { console.error(`PARITY FAILED: ${diffs.length} difference(s)\n  ` + diffs.join('\n  ')); process.exit(1); }
   console.log(`Parity OK: ${fresh.length} coins, ${built.doms.length} dominance card(s), BTC and missing list identical (${n} checks); BTC ${doc.btc.price} on ${doc.btc.day}.`);

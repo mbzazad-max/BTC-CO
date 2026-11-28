@@ -15,6 +15,7 @@
 'use strict';
 const fs = require('fs'), path = require('path'), crypto = require('crypto');
 const { runPage } = require('./runpage');
+const { addUsdtCard } = require('./usdt_card');
 const ROOT = path.resolve(__dirname, '..'), PUB = path.join(ROOT, 'public');
 const args = process.argv.slice(2).filter((a) => !a.startsWith('--'));
 const MD = path.resolve(args[0] || '../market-data'), NM = path.resolve(args[1] || 'node_modules');
@@ -66,7 +67,7 @@ const used = new Set();
 for (const s of Object.values(cfg.sources)) if (s) for (const k of ['series', 'then_days_from_4h']) if (s[k]) used.add(s[k]);
 const inputs = [...used].sort().map((id) => [id, manifest[id] ? manifest[id].last_open + ':' + manifest[id].rows : 'missing']);
 const PAGE_SHA = fs.readFileSync(path.join(ROOT, 'reference/PAGE_SHA256SUMS'), 'utf8').trim().split(/\s+/)[0];
-const inputHash = crypto.createHash('sha256').update(JSON.stringify([inputs, cfg, PAGE_SHA])).digest('hex');
+const inputHash = crypto.createHash('sha256').update(JSON.stringify([inputs, cfg, PAGE_SHA, fs.readFileSync(path.join(__dirname, 'usdt_card.js'), 'utf8')])).digest('hex');
 if (!FORCE && prevFresh && prevFresh.input_hash === inputHash) { console.log('No new closed candles since the last build; nothing rebuilt.'); process.exit(0); }
 
 (async () => {
@@ -76,7 +77,8 @@ if (!FORCE && prevFresh && prevFresh.input_hash === inputHash) { console.log('No
     try { candles[sym] = build(s); } catch (e) { candles[sym] = { error: String(e.message || e) }; }
   }
   const previous = (prevSnap.docs || {})['scan/latest'] || null;
-  const { doc, banner, calls } = await runPage({ nodeModules: NM, candles, previous });
+  const { doc: pageDoc, banner, calls } = await runPage({ nodeModules: NM, candles, previous });
+  const doc = addUsdtCard(pageDoc, previous, pageDoc ? pageDoc.failed : []);   // USDT.D-only card, page's own dominance code
   for (const [sym, c] of Object.entries(candles)) if (c.error) kept.push({ id: sym, why: c.error });
   const series = [];
   for (const sid of [...used].sort()) {
