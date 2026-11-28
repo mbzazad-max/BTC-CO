@@ -1,7 +1,7 @@
 {
- "generated": "2026-11-28 01:37 UTC",
- "checked_at": 1795829866,
- "input_hash": "d82dbc4847fb2adcaa66c00f9f098a9e8928129f106aa0f5c174adad7b6799af",
+ "generated": "2026-11-28 02:00 UTC",
+ "checked_at": 1795831250,
+ "input_hash": "eccf3f44228cc73e6c703fcc38d9f9c65a9b6944807bd0c1cb6e803b7676d5d6",
  "series": [
   {
    "id": "binance/AAVEUSDT/1D",
